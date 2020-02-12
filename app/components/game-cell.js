@@ -1,18 +1,6 @@
 import Component from '@glimmer/component';
 import { computed } from '@ember/object';
 
-const sprites = {
-  clock: '◷',
-  clues: '◻➊➋➌➍➎➏➐➑',
-  flag: '✖', // ⚑ Flag does not work in curses?
-  mark: '⍰',
-  mine: '☀',
-  square: '◼',
-  face_win: '☻',
-  face_play: '☺',
-  face_lose: '☹',
-};
-
 const colors = [
   'blue',
   'green',
