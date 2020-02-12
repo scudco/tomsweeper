@@ -1,0 +1,32 @@
+<div class="font-mono w-64 mx-auto flex align-center justify-center my-5">
+  <div class="flex-grow flex items-center justify-center">
+    {{svg-jar "bomb-solid" width=14 height=14 class="inline -mt-1 mr-1"}} {{this.minesString}}
+  </div>
+  <div class="mx-5 flex items-center">{{svg-jar "smile-solid" width=14 height=14 class="text-yellow-500"}}</div>
+  <div class="flex-grow flex items-center justify-center">
+    {{svg-jar "clock-regular" width=14 height=14 class="inline mr-1"}} {{this.timeString}}
+  </div>
+</div>
+
+<div class="font-mono border w-64 h-64 grid grid-rows-{{@height}} grid-cols-{{@width}} gap-0 mx-auto">
+  {{#each (repeat @height) as |_ y|}}
+    {{#each (repeat @width) as |_ x|}}
+      {{! template-lint-disable no-invalid-interactive}}
+      <div
+        {{on "click" (fn this.reveal x y)}}
+        {{on "contextmenu" (fn this.flag x y)}}
+        class="
+          cursor-pointer
+          hover:border-black
+          border
+          bg-gray-100
+          flex
+          items-center
+          justify-center
+        "
+      >
+      </div>
+      {{! template-lint-enable no-invalid-interactive}}
+    {{/each}}
+  {{/each}}
+</div>
