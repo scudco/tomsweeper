@@ -12,12 +12,13 @@ export default class Gameboard extends Component {
   startTime;
   endTime;
 
-  @tracked board = A();
-  @tracked flaggedCells = A();
-  @tracked markedCells = A();
-  @tracked minedCells = A();
-  @tracked revealedCells = A();
+  @tracked board;
+  @tracked flaggedCells;
+  @tracked markedCells;
+  @tracked minedCells;
+  @tracked revealedCells;
   @tracked time = 0;
+  @tracked revealing = false;
 
   constructor() {
     super(...arguments);
@@ -25,7 +26,7 @@ export default class Gameboard extends Component {
     this.mineCount = this.args.mineCount;
     this.width = this.args.width;
     this.height = this.args.height;
-    this.board = {};
+    this.initBoard();
   }
 
   get face() {
@@ -37,8 +38,13 @@ export default class Gameboard extends Component {
   }
 
   get minesString() {
-    let remainingMines = this.minedCells.length - this.flaggedCells.length;
-    return remainingMines.toString().padStart(3, '0');
+    let count = this.mineCount;
+
+    if (this.minedCells.length) {
+      count = this.minedCells.length - this.flaggedCells.length;
+    }
+
+    return count.toString().padStart(3, '0');
   }
 
   get timeString() {
@@ -55,6 +61,25 @@ export default class Gameboard extends Component {
 
   get over() {
     return this.won || this.lost;
+  }
+
+  initBoard() {
+    this.board = {};
+    this.flaggedCells = A();
+    this.markedCells = A();
+    this.minedCells = A();
+    this.revealedCells = A();
+    this.time = 0;
+    this.revealing = false;
+  }
+
+  @action
+  restart() {
+    this.startTime = null;
+    this.endTime = null;
+    this.stopTimer();
+
+    this.initBoard();
   }
 
   @action
@@ -75,7 +100,7 @@ export default class Gameboard extends Component {
   @action
   flag(cell, evt) {
     evt.preventDefault();
-    if (this.revealedCells.includes(cell)) { return; }
+    if (!this.startTime || this.revealedCells.includes(cell)) { return; }
 
     if (this.flaggedCells.includes(cell)) {
       this.flaggedCells.removeObject(cell);

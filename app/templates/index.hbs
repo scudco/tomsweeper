@@ -1,0 +1,22 @@
+<div class="mx-auto w-32 text-center mt-5">
+  <ul>
+    {{#each (array 'tiny' 'small' 'medium' 'large' 'huge') as |size index|}}
+      <li>
+        <LinkTo
+          @params={{array 'game' size}}
+          class="
+            block
+            px-1 py-2
+            bg-blue-400
+            rounded
+            font-mono
+            text-white mb-2
+            {{if (lt index 2) "bg-blue-400" "opacity-50 cursor-not-allowed"}}
+          "
+        >
+          {{size}}
+        </LinkTo>
+      </li>
+    {{/each}}
+  </ul>
+</div>

@@ -1,18 +1,27 @@
 <div class="font-mono w-64 mx-auto flex align-center justify-center my-5">
   <div class="flex-grow flex items-center justify-center">
-    {{svg-jar "bomb-solid" width=14 height=14 class="inline -mt-1 mr-1"}} {{this.minesString}}
+    <img src="/images/tomster.png" width="16" class="mr-1" alt="Tomster">
+    {{this.minesString}}
   </div>
-  <div class="mx-5 flex items-center">
-    {{#if this.won}}
-      😎
-    {{else if this.lost}}
-      😟
-    {{else}}
-      🙂
-    {{/if}}
-  </div>
+  <button
+    type="button"
+    class="mx-5 flex justify-center items-center cursor-pointer"
+    {{on "click" this.restart}}
+  >
+    <span>
+      {{#if this.won}}
+        😎
+      {{else if this.lost}}
+        😵
+      {{else if this.revealing}}
+        😨
+      {{else}}
+        🙂
+      {{/if}}
+    </span>
+  </button>
   <div class="flex-grow flex items-center justify-center">
-    {{svg-jar "clock-regular" width=14 height=14 class="inline mr-1"}} {{this.timeString}}
+    🕔{{this.timeString}}
   </div>
 </div>
 
@@ -25,6 +34,8 @@
           @revealed={{or this.over (contains cell this.revealedCells)}}
           @flagged={{contains cell this.flaggedCells}}
           @marked={{contains cell this.markedCells}}
+          {{on "mousedown" (fn (mut this.revealing) true)}}
+          {{on "mouseup" (fn (mut this.revealing) false)}}
           {{on "click" (fn this.reveal cell)}}
           {{on "contextmenu" (fn this.flag cell)}}
         />
