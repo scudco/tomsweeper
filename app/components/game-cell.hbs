@@ -1,0 +1,29 @@
+<div
+  class="
+    cursor-pointer
+    hover:border-black
+    border
+    flex
+    items-center
+    justify-center
+    text-{{this.color}}-500
+    {{this.backgroundColor}}
+  "
+  ...attributes
+>
+  {{#if @revealed}}
+    {{#if (eq @value -1)}}
+      <img src="/images/tomster.png" width="16" alt="A wild tomster appears">
+    {{else if (gt @value 0)}}
+      {{@value}}
+    {{else}}
+      &zwnj;
+    {{/if}}
+  {{else if @flagged}}
+    {{svg-jar "flag-solid" width=16 class="text-red-500"}}
+  {{else if @marked}}
+    {{svg-jar "question-circle-regular" width=16 class="text-purple-500"}}
+  {{else}}
+    &zwnj;
+  {{/if}}
+</div>
