@@ -1,6 +1,6 @@
 <div class="mx-auto w-32 text-center mt-5">
   <ul>
-    {{#each (array 'tiny' 'small' 'medium' 'large' 'huge') as |size index|}}
+    {{#each (array 'tiny' 'small' 'medium' 'large' 'huge') as |size|}}
       <li>
         <LinkTo
           @params={{array 'game' size}}
@@ -11,7 +11,6 @@
             rounded
             font-mono
             text-white mb-2
-            {{if (lt index 2) "bg-blue-400" "opacity-50 cursor-not-allowed"}}
           "
         >
           {{size}}

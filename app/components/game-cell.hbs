@@ -1,13 +1,13 @@
 <div
   class="
-    cursor-pointer
-    hover:border-black
+    w-8 h-8
     border
     flex
     items-center
     justify-center
     text-{{this.color}}-500
     {{this.backgroundColor}}
+    {{if this.canReveal "cursor-pointer hover:border-black"}}
   "
   ...attributes
 >

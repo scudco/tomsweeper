@@ -5,41 +5,45 @@
   </div>
   <button
     type="button"
-    class="mx-5 flex justify-center items-center cursor-pointer"
+    class="pl-1 flex justify-center items-center cursor-pointer focus:outline-none"
     {{on "click" this.restart}}
   >
-    <span>
-      {{#if this.won}}
-        😎
-      {{else if this.lost}}
-        😵
-      {{else if this.revealing}}
-        😨
-      {{else}}
-        🙂
-      {{/if}}
-    </span>
+    {{#if this.won}}
+      😎
+    {{else if this.lost}}
+      😵
+    {{else if this.revealing}}
+      😨
+    {{else}}
+      🙂
+    {{/if}}
   </button>
   <div class="flex-grow flex items-center justify-center">
     🕔{{this.timeString}}
   </div>
 </div>
 
-<div class="font-mono border w-64 h-64 grid grid-rows-{{@height}} grid-cols-{{@width}} gap-0 mx-auto">
-  {{#each (repeat @height) as |_ y|}}
-    {{#each (repeat @width) as |_ x|}}
-      {{#let (concat x ',' y) as |cell|}}
-        <GameCell
-          @value={{get this.board cell}}
-          @revealed={{or this.over (contains cell this.revealedCells)}}
-          @flagged={{contains cell this.flaggedCells}}
-          @marked={{contains cell this.markedCells}}
-          {{on "mousedown" (fn (mut this.revealing) true)}}
-          {{on "mouseup" (fn (mut this.revealing) false)}}
-          {{on "click" (fn this.reveal cell)}}
-          {{on "contextmenu" (fn this.flag cell)}}
-        />
-      {{/let}}
+<div class="flex items-center justify-center">
+  <div class="font-mono border">
+    {{#each (repeat this.height) as |_ y|}}
+      <div class="flex">
+        {{#each (repeat this.width) as |_ x|}}
+          {{#let (concat x ',' y) as |cell|}}
+            <GameCell
+              @active={{eq cell this.activeCell}}
+              @flagged={{contains cell this.flaggedCells}}
+              @marked={{contains cell this.markedCells}}
+              @over={{this.over}}
+              @revealed={{or this.over (contains cell this.revealedCells)}}
+              @value={{get this.board cell}}
+              {{on "click" (fn this.reveal cell)}}
+              {{on "contextmenu" (fn this.flag cell)}}
+              {{on "mousedown" (fn (mut this.revealing) true)}}
+              {{on "mouseup" (fn (mut this.revealing) false)}}
+            />
+          {{/let}}
+        {{/each}}
+      </div>
     {{/each}}
-  {{/each}}
+  </div>
 </div>

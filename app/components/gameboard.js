@@ -12,6 +12,7 @@ export default class Gameboard extends Component {
   startTime;
   endTime;
 
+  @tracked activeCell;
   @tracked board;
   @tracked flaggedCells;
   @tracked markedCells;
@@ -23,9 +24,10 @@ export default class Gameboard extends Component {
   constructor() {
     super(...arguments);
 
-    this.mineCount = this.args.mineCount;
-    this.width = this.args.width;
-    this.height = this.args.height;
+    this.width = Math.max(2, this.args.width);
+    this.height = Math.max(2, this.args.height);
+    this.mineCount = Math.min(this.args.mineCount, this.width * this.height - 1);
+
     this.initBoard();
   }
 
@@ -84,6 +86,8 @@ export default class Gameboard extends Component {
 
   @action
   reveal(cell) {
+    if (this.over) { return; }
+
     this.activeCell = cell;
 
     if (!this.startTime) {
