@@ -15,7 +15,7 @@ const colors = [
 export default class GameCell extends Component {
   @computed('args.value')
   get color() {
-    return colors[this.args.value - 1];
+    return `text-${colors[this.args.value - 1]}-500`;
   }
 
   @computed('args.{over,revealed}')
