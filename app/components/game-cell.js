@@ -18,9 +18,9 @@ export default class GameCell extends Component {
     return `text-${colors[this.args.value - 1]}-500`;
   }
 
-  @computed('args.{over,revealed}')
-  get canReveal() {
-    return !this.args.over && !this.args.revealed;
+  @computed('args.{over,value}')
+  get isInteractive() {
+    return !this.args.over && this.args.value !== 0;
   }
 
   @computed('args.{revealed,value}')

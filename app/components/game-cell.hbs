@@ -5,9 +5,10 @@
     flex
     items-center
     justify-center
+    select-none
     {{this.color}}
     {{this.backgroundColor}}
-    {{if this.canReveal "cursor-pointer hover:border-black"}}
+    {{if this.isInteractive "cursor-pointer hover:border-black"}}
   "
   ...attributes
 >

@@ -38,6 +38,7 @@
               @value={{get this.board cell}}
               {{on "click" (fn this.reveal cell)}}
               {{on "contextmenu" (fn this.flag cell)}}
+              {{on "dblclick" (fn this.revealNeighbors cell)}}
               {{on "mousedown" (fn (mut this.revealing) true)}}
               {{on "mouseup" (fn (mut this.revealing) false)}}
             />

@@ -102,6 +102,21 @@ export default class Gameboard extends Component {
   }
 
   @action
+  revealNeighbors(cell) {
+    if (this.over) { return; }
+
+    for (let n of this.neighbors(cell)) {
+      this.activeCell = n;
+      this._reveal(n);
+
+      if (this.over) {
+        this.end();
+        break;
+      }
+    }
+  }
+
+  @action
   flag(cell, evt) {
     evt.preventDefault();
     if (!this.startTime || this.revealedCells.includes(cell)) { return; }
